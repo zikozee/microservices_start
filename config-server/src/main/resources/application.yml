@@ -11,3 +11,4 @@ spring:
         git:
 #          uri: file:///C:/Users/zikoz/Desktop/JAVA/MAVEN/2021_PROJECTS/MAY/Microservices/git-localconfig-repo
           uri: https://github.com/zikozee/microservices_start/tree/main/git-config-repo
+          uri: https://github.com/zikozee/microservices_start.git
