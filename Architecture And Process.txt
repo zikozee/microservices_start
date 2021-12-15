@@ -1,0 +1,154 @@
+
+	Limits MicroService       MicroService X		MicroService Y
+					\			   |				/
+					 \			   |			   /
+					  \			   |			  /
+					   \		   |			 /	
+						V		   V			V
+						Spring Cloud Config Server
+								   |
+								   |
+								   |
+								   V	
+							    Git Repo
+								
+							
+
+=======================
+set-up Limit Service
+====================
+create a limits service with Config-client : spring-cloud-starter-config		
+
+connect it to the config server    ====KKKK
+======
+spring.config.import=optional:configserver:http://localhost:8888    ,,,, 8888 is config server's port
+
+NOTE:::=>>> optional means limits service will still start up regardless	
+===
+
+*** remember to give it a name    =====JJJJ
+spring.application.name=limits-service
+
+With this we can pull configuration from 
+
+**** note name must match file in local git repo config server is talking to
+
+setting-up profile				=====QQQQQ
+================
+spring.profiles.active=dev
+#if profiles above is still picking default
+spring.cloud.config.profile=dev
+
+hence we can pull config from local git repo configured in spring cloud server
+note name of properties file must be same as application name OR 
+if we set this, spring.cloud.config.name it will override sping.application.name
+
+							====================
+							set-up Config server
+							====================
+
+create a spring cloud with Config-server : spring-cloud-starter-config
+
+enable it as server : @EnableConfigServer
+==========
+
+connect it to a local git repo, full path
+======
+spring.cloud.config.server.git.uri=file:///C:/Users/zikoz/Desktop/Java Exercises/MAVEN/2021_PROJECTS/MAY/Microservices/git-localconfig-repo		
+
+Checking config properties of a service
+======
+http://localhost:8888/<SERVICE_NAME>/profile
+where SERVICE_NAME is 	spring.cloud.config.name or sping.application.name
+profile is anything we append to properties file name. e.g limits-service-qa.properties
+not profile default is default i.e properties file with nothing appended. e.g limits-service.properties
+
+
+
+======================
+	FEIGN REST CLIENT
+======================
+
+
+
+
+
+======================
+	NAME SERVER OR SERVICE REGISTRY			http://localhost:8761/
+======================
+	
+ALL INSTANCES of all the microservices will register with the naming server 
+
+so say if currency Conversion microservice wants to talk to Currency Exchange microservice
+currency COnversion microservice will ask the naming server what are the addresses of the Currency Exchange microservice
+
+That way the naming server which is directly attached to the load balancer, 
+gets current active services and sends to the conversion service
+
+
+
+Add below dependency to all the mircoservices that will connect
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+</dependency>
+
+to be safe: though it will be picked up automatically
+eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+
+
+					======================
+						API-GATEWAY
+					======================
+we can implement our authentication or monitoring etc here in the api gate way
+so we have one security or monitoring for all
+hence we only expose our api gateway enpoints since all requests route through here
+
+e.g on security implementation, no one can access any endpoint except logged in
+
+
+
+===
+PROPERTIES
+
+spring.cloud.gateway.discovery.locator.enabled=true
+this property ensures that apis registered with eureka can be called through api gateway
+
+spring.cloud.gateway.discovery.locator.lower-case-service-id=true
+this ensures application names should be lower cased
+
+
+==============
+ROUTING
+===============
+to use routing, comment out the above properties
+
+
+==============
+CIRCUIT BREAKER
+==============
+after a specific number of calls, only the default response is sent back while main call is suspended
+after some time (which we configure) it checks again. after a specific number of times, it suspends and defaults to the default response
+
+how to test
+use ubuntu
+watch -n 0.01 curl http://172.29.48.1:8000/sample-api
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

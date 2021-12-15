@@ -1,0 +1,84 @@
+
+	Limits MicroService       MicroService X		MicroService Y
+					\			   |				/
+					 \			   |			   /
+					  \			   |			  /
+					   \		   |			 /	
+						V		   V			V
+						Spring Cloud Config Server
+								   |
+								   |
+								   |
+								   V	
+							    Git Repo
+								
+								
+								
+=========================
+
+
+								
+								
+							Currency Conversion MicroService
+										|
+										|
+										|
+										V
+									Load Balancer --> NAMING SERVER OR SERVICE REGISTRY
+										|
+									/	| 		\
+								   /	|		  \
+								  /		|		   \
+								 /		|		    \
+							    /		|	 	  	 \
+						       /		|	  	  	   \
+					          /		 	|				  \
+				             /			|					\
+							/			|						\
+										V
+Currency Exchange Instance1		Currency Exchange Instance2 	Currency Exchange Instance n
+
+
+
+
+
+=================================
+
+		Currency Conversion MicroService		Currency Conversion MicroService		MicroServiceX
+		
+								     \					|							/
+									  \					|						/	
+										\				|					 /		
+										 V				V					V	
+										NAMING SERVER OR SERVICE REGISTRY
+	
+
+
+
+
+
+
+		
+		API Gateway       Currency Conversion MicroService 			Currency Exchange MicroService
+					\				|								/
+					 \				|							   /
+					  \				|							  /
+					   \			|							/
+						\			V
+							
+							
+									Rabbit MQ
+							
+										|
+										|
+										V
+							DISTRIBUTED TRACING SERVER
+										|
+										|
+										|
+										|
+										|
+										V
+									DATABASE
+
+

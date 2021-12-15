@@ -1,0 +1,23 @@
+#must match properties file name in git repo
+spring:
+  application:
+    name: limits-service
+
+  config:
+    import: optional:configserver:http://localhost:8888
+
+
+  profiles:
+    active: dev
+#if profiles above is still picking default
+  cloud:
+    config:
+      profile: dev
+
+      #if we want a different property file used by this service, this name will now be used
+      #this will override the spring.application.name
+      name: limits-badass-service
+
+limits-service:
+  minimum: 3
+  maximum: 997
