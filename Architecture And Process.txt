@@ -59,7 +59,7 @@ spring.cloud.config.server.git.uri=file:///C:/Users/zikoz/Desktop/Java Exercises
 Checking config properties of a service
 ======
 http://localhost:8888/<SERVICE_NAME>/profile
-where SERVICE_NAME is 	spring.cloud.config.name or sping.application.name
+where SERVICE_NAME is 	spring.cloud.config.name or spring.application.name
 profile is anything we append to properties file name. e.g limits-service-qa.properties
 not profile default is default i.e properties file with nothing appended. e.g limits-service.properties
 

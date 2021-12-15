@@ -1,10 +1,10 @@
-package com.zikozee.springcloudconfigserver;
+package com.zikozee.configserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringCloudConfigServerApplicationTests {
+class ConfigServerApplicationTests {
 
     @Test
     void contextLoads() {
