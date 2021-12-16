@@ -8,12 +8,12 @@ spring:
 
 
   profiles:
-    active: qa
+    active: dev
 #if profiles above is still picking default we can use spring.cloud.config.profile
   cloud:
     config:
 #      profile: qa
-      name: limitsyy-service
+      name: microservice-x-dev
        # if we want to fetch the config file using a different name other than the spring.application.name
        # we can use this property :spring.cloud.config.name
 
