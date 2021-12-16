@@ -16,7 +16,7 @@ spring:
 
       #if we want a different property file used by this service, this name will now be used
       #this will override the spring.application.name
-      name: limits-badass-service
+      name: limits-service
 
 limits-service:
   minimum: 3
