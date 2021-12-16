@@ -10,13 +10,13 @@ spring:
   profiles:
     active: dev
 #if profiles above is still picking default
-  cloud:
-    config:
-      profile: dev
-
-      #if we want a different property file used by this service, this name will now be used
-      #this will override the spring.application.name
-      name: limits-service
+#  cloud:
+#    config:
+#      profile: dev
+#
+#      #if we want a different property file used by this service, this name will now be used
+#      #this will override the spring.application.name
+#      name: limits-service
 
 limits-service:
   minimum: 3

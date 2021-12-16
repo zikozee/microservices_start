@@ -15,3 +15,12 @@ which is a part of the microservices project
 ### Support
 For questions and help:
 * contact me at ezekiel.eromosei@gmail.com
+
+### NOTE
+- curl http://localhost:8080/limits
+- if we specify this spring.cloud.config.profile=dev and spring.cloud.config.name=limits-service
+- it will override the spring.application.name and profile used 
+- to see properties that will be called and from here browse: http://localhost:8888/{application_name}/profile
+
+
+application_name ::: is same as spring application name    or spring.cloud.config.name if used
