@@ -18,8 +18,11 @@ For questions and help:
 
 ### NOTE
 - curl http://localhost:8080/limits
-- if we specify this spring.cloud.config.profile=dev and spring.cloud.config.name=limits-service
-- it will override the spring.application.name and profile used 
+- we can specify this spring.cloud.config.profile=dev
+- if the default profile is being picked up **check logs to verify**
+- Logs look like **Fetching config from server at:: ...**
+- if we need to use another name to fetch ppties from config server other than the 
+- spring.application.name,  we can use **spring.cloud.config.name=limits-service**
 - to see properties that will be called and from here browse: http://localhost:8888/{application_name}/profile
 
 
