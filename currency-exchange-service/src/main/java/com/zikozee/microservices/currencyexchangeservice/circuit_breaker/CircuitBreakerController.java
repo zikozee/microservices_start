@@ -19,7 +19,7 @@ public class CircuitBreakerController {
 
     @GetMapping(path = "/sample-api")
 //    @Retry(name = "default")//default 3 retries
-//    @Retry(name = "sample-api", fallbackMethod = "hardcodedResponse")//check application.properties
+//    @Retry(name = "sample-api", fallbackMethod = "hardcodedResponse")//check application.yml
 //    @CircuitBreaker(name = "default", fallbackMethod = "hardcodedResponse")
     @RateLimiter(name = "default")// total number of calls per second e.g 10s => 10000 calls only allow to the sample api
 //    @Bulkhead(name = "sample-api")// total number of concurrent calls

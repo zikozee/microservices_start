@@ -2,9 +2,7 @@ package com.zikozee.microservices.currencyconversionservice.domain.currency_conv
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -38,13 +36,11 @@ public class CurrencyConversionController {
 
 
         CurrencyConversion currencyConversion = responseEntity.getBody();
+        currencyConversion.setQuantity(quantity);
+        currencyConversion.setTotalCalculatedAmount(quantity.multiply(currencyConversion.getConversionMultiple()));
+        currencyConversion.setEnvironment(currencyConversion.getEnvironment() + " rest template");
 
-        return CurrencyConversion.builder()
-                .id(currencyConversion.getId()).from(currencyConversion.getFrom()).to(currencyConversion.getTo())
-                .quantity(currencyConversion.getQuantity())
-                .conversionMultiple(currencyConversion.getConversionMultiple())
-                .totalCalculatedAmount(quantity.multiply(currencyConversion.getConversionMultiple()))
-                .environment(currencyConversion.getEnvironment() + " rest template").build();
+        return currencyConversion;
     }
 
     //todo info ===>>> Using feign client
@@ -57,11 +53,16 @@ public class CurrencyConversionController {
 
         CurrencyConversion currencyConversion = proxy.retrieveExchangeValue(from, to);
 
-        return CurrencyConversion.builder()
-                .id(currencyConversion.getId()).from(currencyConversion.getFrom()).to(currencyConversion.getTo())
-                .quantity(currencyConversion.getQuantity())
-                .conversionMultiple(currencyConversion.getConversionMultiple())
-                .totalCalculatedAmount(quantity.multiply(currencyConversion.getConversionMultiple()))
-                .environment(currencyConversion.getEnvironment() + " feign").build();
+        currencyConversion.setQuantity(quantity);
+        currencyConversion.setTotalCalculatedAmount(quantity.multiply(currencyConversion.getConversionMultiple()));
+        currencyConversion.setEnvironment(currencyConversion.getEnvironment() + " feign");
+
+        return currencyConversion;
+    }
+
+    @PostMapping(path = "save-conversion-feign")
+    public CurrencyConversion calculateCurrencyConversionFeign(@RequestBody CurrencyExchangeDto currencyExchangeDto){
+
+        return proxy.saveExchange(currencyExchangeDto);
     }
 }

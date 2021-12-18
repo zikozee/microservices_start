@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
  * @author : zikoz
  * @created : 09 May, 2021
  */
-@EnableEurekaServer
 @Configuration
+@EnableEurekaServer
 public class Config {
 }

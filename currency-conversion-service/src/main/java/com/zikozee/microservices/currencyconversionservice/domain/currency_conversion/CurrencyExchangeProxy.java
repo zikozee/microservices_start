@@ -3,6 +3,8 @@ package com.zikozee.microservices.currencyconversionservice.domain.currency_conv
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * @author : zikoz
@@ -14,4 +16,7 @@ public interface CurrencyExchangeProxy {
 
     @GetMapping(path = "currency-exchange/from/{from}/to/{to}")
     CurrencyConversion retrieveExchangeValue(@PathVariable("from") String from, @PathVariable("to") String to); // we made this possible by making sure our CurrencyConversion Matches CurrencyExchange
+
+    @PostMapping(path = "currency-exchange/save")
+    CurrencyConversion saveExchange(@RequestBody CurrencyExchangeDto currencyExchangeDto);
 }

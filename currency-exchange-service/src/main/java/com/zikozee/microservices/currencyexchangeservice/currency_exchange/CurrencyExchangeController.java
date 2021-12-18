@@ -2,10 +2,10 @@ package com.zikozee.microservices.currencyexchangeservice.currency_exchange;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author : zikoz
@@ -18,6 +18,7 @@ public class CurrencyExchangeController {
 
     private final Environment environment;
     private final CurrencyExchangeRepository repository;
+    private final ModelMapper modelMapper;
 
     @GetMapping(path = "currency-exchange/from/{from}/to/{to}")
     public CurrencyExchange retrieveExchangeValue(@PathVariable("from") String from, @PathVariable("to") String to){
@@ -30,5 +31,11 @@ public class CurrencyExchangeController {
         String port = environment.getProperty("local.server.port");
         currencyExchange.setEnvironment(port);
         return currencyExchange;
+    }
+
+    @PostMapping(path = "currency-exchange/save")
+    public CurrencyExchange retrieveExchangeValue(@RequestBody CurrencyExchangeDto currencyExchangeDto){
+        CurrencyExchange currencyExchange = modelMapper.map(currencyExchangeDto, CurrencyExchange.class);
+        return repository.save(currencyExchange);
     }
 }
