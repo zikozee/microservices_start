@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @created : 09 May, 2021
  */
 //@FeignClient(name = "currency-exchange", url = "localhost:8000") // feign helps to call rest apis easily
-@FeignClient(name = "currency-exchange") //load-balancing (eureka client) now talking to eureka naming server
+@FeignClient(name = "${exchange-server}") //load-balancing (eureka client) now talking to eureka naming server
 public interface CurrencyExchangeProxy {
 
     @GetMapping(path = "currency-exchange/from/{from}/to/{to}")
