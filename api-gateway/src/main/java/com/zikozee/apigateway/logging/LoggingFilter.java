@@ -15,9 +15,15 @@ import reactor.core.publisher.Mono;
 @Component
 public class LoggingFilter implements GlobalFilter {
 
+    // todo info: if we want to authorize all the requests without leaving any out, then here is the best place
+    // REMEMBER HOW WE USED FILTER for OncePerRequestFilter in jwt
+    // this is also a filter so we can do same here
+
+    // however, if we just want to authenticate some request, then we want to stick to RouteLocator in a granular way
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info("Path of the request received {}", exchange.getRequest().getPath());
+        log.info("Path of the request received -> {}", exchange.getRequest().getPath());
 
         return chain.filter(exchange); //continue to next filter
     }
