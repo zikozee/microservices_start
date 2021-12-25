@@ -3,6 +3,7 @@ package com.zikozee.apigateway.config;
 import com.zikozee.apigateway.modify.CurrencyConversion;
 import com.zikozee.apigateway.modify.CurrencyConversionModified;
 import com.zikozee.apigateway.modify.ResponseReWrite;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.filter.factory.rewrite.RewriteFunction;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
@@ -19,7 +20,9 @@ import static com.zikozee.apigateway.modify.Mod.modCurrencyConversionResponse;
  * @created : 09 May, 2021
  */
 @Configuration
+@RequiredArgsConstructor
 public class ApiGatewayConfiguration {
+    private final ResponseReWrite  responseReWrite;
 
     @Bean
     public RouteLocator gatewayRouter(RouteLocatorBuilder builder) {
@@ -42,8 +45,9 @@ public class ApiGatewayConfiguration {
 
                 .route(p -> p.path("/currency-conversion-feign/**") // path or uri to be accessed
 //                        .filters(f -> f.modifyResponseBody(CurrencyConversion.class, CurrencyConversionModified.class,
-//                                (exchange, responseBody) -> Mono.just(modCurrencyConversionResponse(responseBody))))
-                        .filters((f -> f.modifyResponseBody(CurrencyConversion.class, CurrencyConversionModified.class, new ResponseReWrite())))
+//                                (exchange, responseBody) -> Mono.just(modCurrencyConversionResponse(responseBody))))  //responseBody is CurrencyConversion
+//                        .filters((f -> f.modifyResponseBody(CurrencyConversion.class, CurrencyConversionModified.class, new ResponseReWrite()))) // using new keyword
+                        .filters((f -> f.modifyResponseBody(CurrencyConversion.class, CurrencyConversionModified.class, responseReWrite)))
                         .uri("lb://currency-conversion")) //name registered on load naming server
 
                 //another redirection example
