@@ -28,4 +28,9 @@
 
 ## Adding Global Filters
 - that is anything we do here is inherited by every filter
-- see samplein logging -> LoggingFilter
+- see sample in logging -> LoggingFilter
+
+## Modifying response body through Route Filters
+- see currency-conversion-feign 
+- how the response was re-written using ReWriteFunction
+- Both as a direct implementation and using a Custom class

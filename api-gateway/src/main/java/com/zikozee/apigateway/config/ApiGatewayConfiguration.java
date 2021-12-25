@@ -1,11 +1,18 @@
 package com.zikozee.apigateway.config;
 
+import com.zikozee.apigateway.modify.CurrencyConversion;
+import com.zikozee.apigateway.modify.CurrencyConversionModified;
+import com.zikozee.apigateway.modify.ResponseReWrite;
+import org.springframework.cloud.gateway.filter.factory.rewrite.RewriteFunction;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import reactor.core.publisher.Mono;
 
 import java.util.function.Function;
+
+import static com.zikozee.apigateway.modify.Mod.modCurrencyConversionResponse;
 
 /**
  * @author : zikoz
@@ -18,6 +25,8 @@ public class ApiGatewayConfiguration {
     public RouteLocator gatewayRouter(RouteLocatorBuilder builder) {
 
         //we can allow add filters before authentication here
+
+//        RewriteFunction<CurrencyConversion, CurrencyConversionModified> rewriteFunction =
 
         return builder.routes()
                 .route(p -> p.path("/get")    // http://localhost:8765/get
@@ -32,6 +41,9 @@ public class ApiGatewayConfiguration {
                         .uri("lb://currency-conversion"))//name registered on load naming server
 
                 .route(p -> p.path("/currency-conversion-feign/**") // path or uri to be accessed
+//                        .filters(f -> f.modifyResponseBody(CurrencyConversion.class, CurrencyConversionModified.class,
+//                                (exchange, responseBody) -> Mono.just(modCurrencyConversionResponse(responseBody))))
+                        .filters((f -> f.modifyResponseBody(CurrencyConversion.class, CurrencyConversionModified.class, new ResponseReWrite())))
                         .uri("lb://currency-conversion")) //name registered on load naming server
 
                 //another redirection example
