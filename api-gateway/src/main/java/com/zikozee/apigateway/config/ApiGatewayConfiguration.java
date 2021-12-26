@@ -29,8 +29,6 @@ public class ApiGatewayConfiguration {
 
         //we can allow add filters before authentication here
 
-//        RewriteFunction<CurrencyConversion, CurrencyConversionModified> rewriteFunction =
-
         return builder.routes()
                 .route(p -> p.path("/get")    // http://localhost:8765/get
                         .filters(f -> f.addRequestHeader("MyHeader", "MyURI")

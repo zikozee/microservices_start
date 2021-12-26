@@ -1,1 +1,20 @@
 - http://localhost:<GENERATED-PORT>/currency-exchange/from/EUR/to/INR
+
+
+## Resilience4j
+- https://resilience4j.readme.io/docs/getting-started-3
+- dependency: resilience4j-spring-boot2 (io.github.resilience4j)
+- additional dependencies: starter-actuator and starter-aop
+
+# Retries:
+- @Retry(name="default") // 3 times
+- for custom retry on a particular method, give the method a unique name,
+- and set the number of retries in application.properties  **resilience4j.retry.instances.sample-api.max-attempts=5**
+- note the method name defined in retry is **sample-api**
+- we can configure interval: resilience4j.retry.instances.sample-api.wait-duration=5s
+- we can also set enable-exponential-backoff which starts with our **wait-duration** and exponentially increase
+
+# FallBack Response:
+- we can have fallback response with the retry
+- we must throw a form of exception that extends Exception or throwable and customize it to return the response we
+- want
