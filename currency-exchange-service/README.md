@@ -5,6 +5,8 @@
 - https://resilience4j.readme.io/docs/getting-started-3
 - dependency: resilience4j-spring-boot2 (io.github.resilience4j)
 - additional dependencies: starter-actuator and starter-aop
+- **note** for each api we can configure a specific behavior by giving it a specific name
+- then that name is used in the yml file to set its properties
 
 # Retries:
 - @Retry(name="default") // 3 times
@@ -27,3 +29,10 @@
 - CLOSED: calling the dependent microservice continuously (application startup)
 - OPEN: here only the fallback response is returned. hence, dependent microservice is not called (when it notices service is failing)
 - HALF_OPEN: a percentage is sent to the microservice, while the other percentages, the fall back response is sent
+
+## RateLimiting
+- number of calls to be allowed per second
+- it the limit is exceeded, we get an error
+
+## BulkHead
+- number of concurrent calls
