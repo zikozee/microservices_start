@@ -47,8 +47,12 @@ resilience4j:
         max-attempts: 5
         wait-duration: 5s
         enable-exponential-backoff: true
-
-# allow 2 calls only in 10 seconds  --- we can change default to name used
+  circuitbreaker:
+    instances:
+      # specific name for custom retry
+      some-name:
+        slow-call-duration-threshold: 100ms
+  # allow 2 calls only in 10 seconds  --- we can change default to name used
   ratelimiter:
     instances:
       default:

@@ -18,3 +18,12 @@
 - we can have fallback response with the retry
 - we must throw a form of exception that extends Exception or throwable and customize it to return the response we
 - want
+
+## Circuit-Breaker
+- Used is the service is down for a long time
+- it returns a default response preventing the failing api from taking more load
+- cd to CLOUD FOLDER: **.\watch curl http://localhost:8765/currency-exchange/sample-api**
+- **https://resilience4j.readme.io/docs/circuitbreaker**
+- CLOSED: calling the dependent microservice continuously (application startup)
+- OPEN: here only the fallback response is returned. hence, dependent microservice is not called (when it notices service is failing)
+- HALF_OPEN: a percentage is sent to the microservice, while the other percentages, the fall back response is sent
