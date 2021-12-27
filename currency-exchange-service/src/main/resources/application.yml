@@ -18,8 +18,8 @@ spring:
       enabled: true
 
 
-  # sampling only a percentage of the request rather than every request 0.1 - 10%,
-# though we want to sample all
+# sampling only a percentage of the request rather than every request 0.1 - 10%,
+# sampling all will result in serious performance issue
   sleuth:
     sampler:
       probability: 1.0
