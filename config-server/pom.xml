@@ -64,6 +64,12 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+
+                    <!--DOCKER CONFIG-->
+                    <image>
+                        <name>zikozee/base-${project.artifactId}:${project.version}</name>
+                    </image>
+                    <pullPolicy>IF_NOT_PRESENT</pullPolicy>
                 </configuration>
             </plugin>
         </plugins>
