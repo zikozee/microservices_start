@@ -32,7 +32,7 @@ services:
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411
       RABBIT_URI: amqp://quest:quest@rabbitmq:5672
-      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_HOST: rabbitmq #override the default which is localhost
       SPRING_ZIPKIN_SENDER_TYPE: rabbit
 
   currency-conversion:
