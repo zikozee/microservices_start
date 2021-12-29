@@ -1,6 +1,7 @@
 package com.zikozee.microservices.currencyconversionservice.domain.currency_conversion;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -13,6 +14,7 @@ import java.util.Map;
  * @author : zikoz
  * @created : 02 May, 2021
  */
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class CurrencyConversionController {
@@ -24,6 +26,9 @@ public class CurrencyConversionController {
             @PathVariable("from") String from,
             @PathVariable("to") String to,
             @PathVariable("quantity") BigDecimal quantity){
+
+        //CHANGE-KUBERNETES
+        log.info("calculateCurrencyConversion called with {} to {} with {}", from, to, quantity);
 
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("from", from);
@@ -50,6 +55,8 @@ public class CurrencyConversionController {
             @PathVariable("to") String to,
             @PathVariable("quantity") BigDecimal quantity){
 
+        //CHANGE-KUBERNETES
+        log.info("calculateCurrencyConversionFeign called with {} to {} with {}", from, to, quantity);
 
         CurrencyConversion currencyConversion = proxy.retrieveExchangeValue(from, to);
 

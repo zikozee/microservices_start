@@ -4,13 +4,14 @@ spring:
   application:
     name: currency-conversion
 
-  config:
-    import: optional:configserver:http://localhost:8888
-
-  cloud:
-    config:
-      # fetching feign name used for exchange server from config server
-      name: currency-conversion-service-dev
+## KUBERNETES-CHANGE- we use kubernetes config-map todo:info
+#  config:
+#    import: optional:configserver:http://localhost:8888
+#
+#  cloud:
+#    config:
+#      # fetching feign name used for exchange server from config server
+#      name: currency-conversion-service-dev
 
 # sampling only a percentage of the request rather than every request 0.1 - 10%,
 # though we want to sample all
@@ -22,15 +23,31 @@ spring:
 ##spring.zipkin.base-url= http://localhost:9411/
 ##spring.zipkin.sender.type= rabbit   # rabbit, activemq, kafka, web
 
-#connect to naming server
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka
-  # ensures all instances are registered when using random port
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-##multiple instances
-#eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka,http://localhost:8762/eureka
+
+## KUBERNETES-CHANGE- it has its own service-discovery todo:info
+##connect to naming server
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka
+#  # ensures all instances are registered when using random port
+#  instance:
+#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+###multiple instances
+##eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka,http://localhost:8762/eureka
+
+
+## CHANGE-KUBERNETES
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
 
 
