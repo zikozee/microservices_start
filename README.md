@@ -61,8 +61,34 @@ kubectl get svc currency-exchange -o yaml
 - changing deployment image
 kubectl set image deployment hello-world-rest-api hello-world-rest-api=DUMMY_IMAGE:TEST
                                                     container_name
+- ROLLOUTS
+- kubectl rollout history deployment <deployment_name>     :::::::::::: gives number of revision
+- kubectl rollout undo deployment currency-exchange --to-revision=<revision_number_from_above>
+- **by defaults, when switching to a new release, there is a bit of downtime**
+- 
+- ### LIVENESS AND READINESS PROBE
+- readiness probe: health check if unsuccessful, don't send traffic
+- liveness probe: health check if unsuccessful, restart pod
+- 
+- **spring-boot >=2.3** provides /actuator/health/readiness and /actuator/health/liveness from actuator
+- explore /actuator,  /actuator/health, to see other options
+- 
+- also enabling 
+> management:endpoint:health:probes:enabled: true
+> management.health:livenessstate:enabled: true 
+> management.health.readinessstate:enabled: true
+
+- ### AUTOSCALING
+- manual :: kubectl scale deployment currency-exchange --replicas=3
+- manual :: change from deployment file
+- 
+- automatic :: kubectl autoscale deployment currency-exchange --min=1 --max=3 --cpu-percent=70 
+                                           autoscale from    min_pod to  max_pod   based on load%  
+- **kubectl get hpa**  :: check config
+- production: use say 70%
+- test: use 5% for testing
 ## SERVICES (svc)
-- This ensures cusumers get a never changing url
+- This ensures consumers get a never changing url
 - search **Load Balancing** to see Load Balancers created under networks
 
 
@@ -96,6 +122,7 @@ kubectl expose deployment currency-conversion --type=LoadBalancer --port=8100
 - ./watch curl http://35.232.209.247:8100/currency-conversion-feign/from/USD/to/INR/quantity/15
 - **delete all**
 - kubectl delete all -l app=<currency-conversion>
+- kubectl rollout history deployment currency-conversion
 
 
 ## K8s deployment with yml
@@ -113,7 +140,13 @@ show tree: Ctrl + F12
         value: http://currency-exchange
 
 - **CONFIG MAP**
-- 
+- kubectl create configmap currency-conversion --from-literal=CURRENCY_EXCHANGE_URI=http://currency-exchange
+
+
+### Logs:
+object:value in string collection
+e.g
+textPayload:83d1f4fe24c6e171
 
 
 

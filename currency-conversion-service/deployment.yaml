@@ -26,9 +26,21 @@ spec:
       - image: zikozee/base-currency-conversion-service:0.0.12-SNAPSHOT
         imagePullPolicy: IfNotPresent
         name: base-currency-conversion-service
-        env:
-          - name: CURRENCY_EXCHANGE_URI
-            value: http://currency-exchange
+        envFrom:
+          - configMapRef:
+              name: currency-conversion
+#        config-map used below
+#        env:
+#          - name: CURRENCY_EXCHANGE_URI
+#            value: http://currency-exchange
+        readinessProbe: # ready to receive traffic
+          httpGet:
+            port: 8100
+            path: /actuator/health/readiness
+        livenessProbe: # restart if not up
+          httpGet:
+            port: 8100
+            path: /actuator/health/liveness
       restartPolicy: Always
 
 ---
@@ -49,3 +61,13 @@ spec:
     app: currency-conversion
   sessionAffinity: None
   type: LoadBalancer
+
+---
+
+apiVersion: v1
+data:
+  CURRENCY_EXCHANGE_URI: http://currency-exchange
+kind: ConfigMap
+metadata:
+  name: currency-conversion
+  namespace: default

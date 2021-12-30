@@ -8,7 +8,7 @@ metadata:
   name: currency-exchange
   namespace: default
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: currency-exchange
@@ -26,6 +26,14 @@ spec:
       - image: zikozee/base-currency-exchange-service:0.0.12-SNAPSHOT
         imagePullPolicy: IfNotPresent
         name: base-currency-exchange-service
+        readinessProbe:
+          httpGet:
+            port: 8000
+            path: /actuator/health/readiness
+        livenessProbe:
+          httpGet:
+            port: 8000
+            path: /actuator/health/liveness
       restartPolicy: Always
 
 ---
