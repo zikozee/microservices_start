@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 //@FeignClient(name = "${exchange-server}") //load-balancing (eureka client) now talking to eureka naming server
 
 //KUBERNETES-CHANGE
-@FeignClient(name = "currency-exchange", url = "${CURRENCY_EXCHANGE_SERVICE_HOST:http://localhost}:8000") // for kubernetes we setup an environment variable for "host" CURRENCY_EXCHANGE_SERVICE_HOST, on local we use localhost, port is constant
+//CURRENCY_EXCHANGE_SERVICE_HOST is auto-created by k8s based on the application name defined in the currency exchange service
+// for kubernetes we set-up an environment variable for "host" CURRENCY_EXCHANGE_SERVICE_HOST, on local we use localhost, port is constant
+@FeignClient(name = "currency-exchange", url = "${CURRENCY_EXCHANGE_SERVICE_HOST:http://localhost}:8000")
 public interface CurrencyExchangeProxy {
 
     @GetMapping(path = "currency-exchange/from/{from}/to/{to}")
