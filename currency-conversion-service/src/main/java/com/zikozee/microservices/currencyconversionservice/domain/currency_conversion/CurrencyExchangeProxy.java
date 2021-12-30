@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 //KUBERNETES-CHANGE
 //CURRENCY_EXCHANGE_SERVICE_HOST is auto-created by k8s based on the application name defined in the currency exchange service
 // for kubernetes we set-up an environment variable for "host" CURRENCY_EXCHANGE_SERVICE_HOST, on local we use localhost, port is constant
-@FeignClient(name = "currency-exchange", url = "${CURRENCY_EXCHANGE_SERVICE_HOST:http://localhost}:8000")
+//@FeignClient(name = "currency-exchange", url = "${CURRENCY_EXCHANGE_SERVICE_HOST:http://localhost}:8000") //todo info: NOT RECOMMENDED
+
+
+//USE CUSTOM-CREATED ENVs  //todo info: RECOMMENDED
+@FeignClient(name = "currency-exchange", url = "${CURRENCY_EXCHANGE_URI:http://localhost}:8000")
 public interface CurrencyExchangeProxy {
 
     @GetMapping(path = "currency-exchange/from/{from}/to/{to}")

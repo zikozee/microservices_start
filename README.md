@@ -37,8 +37,12 @@
 - to see services deployed: services & ingress
 - check events in a sorted order: **kubectl get events --sort-by=.metadata.creationTimestamp**
 
-DELETE ALL RELATED TO LABEL WITH APP NAME
+###DELETE ALL RELATED TO LABEL WITH APP NAME
 - kubectl delete all -l app=<app_name>
+
+### COPY K8s yaml to file
+kubectl get deployment currency-exchange -o yaml
+kubectl get svc currency-exchange -o yaml
 
 ## PODS
 =======
@@ -98,6 +102,18 @@ kubectl expose deployment currency-conversion --type=LoadBalancer --port=8100
 =====================
 show tree: Ctrl + F12
 
+
+## K8s Configuration
+### setting env variable
+-**CONTAINER ENV**
+- we can do this directly on a container by using the env
+>   name: base-currency-conversion-service
+    env:
+      - name: CURRENCY_EXCHANGE_URI
+        value: http://currency-exchange
+
+- **CONFIG MAP**
+- 
 
 
 
